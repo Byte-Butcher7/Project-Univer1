@@ -1,14 +1,18 @@
 class Lesson {
-  final int? id;
-  final String subjectName; // Название предмета (например, "Высшая математика")
-  final String teacherName; // ФИО преподавателя
-  final String classroom;   // Кабинет/аудитория (например, "304")
-  final String dayOfWeek;   // День недели (например, "Понедельник")
-  final String startTime;   // Время начала (например, "09:00")
-  final String endTime;     // Время окончания (например, "10:30")
+  final int id;
+  final int subjectId;
+  final String subjectName;
+  final String teacherName;
+  final String classroom;
 
-  Lesson({
-    this.id,
+  /// 1 = понедельник ... 6 = суббота
+  final int dayOfWeek;
+  final String startTime; // "08:30"
+  final String endTime; // "10:00"
+
+  const Lesson({
+    required this.id,
+    required this.subjectId,
     required this.subjectName,
     required this.teacherName,
     required this.classroom,
@@ -17,27 +21,14 @@ class Lesson {
     required this.endTime,
   });
 
-  factory Lesson.fromJson(Map<String, dynamic> json) {
-    return Lesson(
-      id: json['id'],
-      subjectName: json['subject_name'] ?? '',
-      teacherName: json['teacher_name'] ?? '',
-      classroom: json['classroom'] ?? '',
-      dayOfWeek: json['day_of_week'] ?? '',
-      startTime: json['start_time'] ?? '',
-      endTime: json['end_time'] ?? '',
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      if (id != null) 'id': id,
-      'subject_name': subjectName,
-      'teacher_name': teacherName,
-      'classroom': classroom,
-      'day_of_week': dayOfWeek,
-      'start_time': startTime,
-      'end_time': endTime,
-    };
-  }
+  factory Lesson.fromMap(Map<String, Object?> map) => Lesson(
+        id: map['id'] as int,
+        subjectId: map['subject_id'] as int,
+        subjectName: map['subject_name'] as String,
+        teacherName: map['teacher_name'] as String,
+        classroom: map['classroom'] as String,
+        dayOfWeek: map['day_of_week'] as int,
+        startTime: map['start_time'] as String,
+        endTime: map['end_time'] as String,
+      );
 }
